@@ -4,91 +4,77 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Assistant Demo • Powered by Vapi</title>
-
   <style>
     body {
       margin: 0;
       font-family: "Inter", sans-serif;
       background: #0f0f0f;
       color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
+      position: relative;
     }
 
-    header {
-      text-align: center;
-      padding: 80px 20px 40px;
-      max-width: 800px;
-      animation: fadeIn 0.9s ease-out both;
+    /* Container for chat widget trigger */
+    .vapi-widget-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
     }
 
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      background: linear-gradient(90deg, #3B82F6, #60A5FA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #cccccc;
-      line-height: 1.6;
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      border-radius: 20px;
-      padding: 40px;
-      width: 90%;
-      max-width: 700px;
-      box-shadow: 0 0 40px rgba(59, 130, 246, 0.25);
-      animation: fadeUp 1.1s ease-out both;
-    }
-
-    footer {
-      margin-top: 80px;
-      padding-bottom: 40px;
+    /* Optional: small “chat prompt” text above button */
+    .chat-hint {
+      margin-bottom: 8px;
+      text-align: right;
       font-size: 0.9rem;
-      color: #666;
+      color: #bbbbbb;
+      opacity: 0.85;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Style the trigger button (you can tailor size/color) */
+    .chat-trigger-button {
+      background: #3B82F6;
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .chat-trigger-button svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Meet FusionIQ Labs AI Assistant</h1>
-  <p>
-    This demo shows how seamlessly the Vapi AI widget integrates into the website.
-    Interact with the assistant below — ask questions, explore features, or
-    start a conversation in real time.
-  </p>
-</header>
+  <!-- Optional page content -->
+  <div style="padding: 40px; max-width: 800px; margin: auto;">
+    <h1>Welcome to Our Site</h1>
+    <p>Scroll around — the chat widget stays visible in the bottom right.</p>
+  </div>
 
-<div class="card">
-  <!-- Vapi Widget Embed -->
+  <!-- Floating chat trigger -->
+  <div class="vapi-widget-wrapper">
+    <div class="chat-hint">Chat with our AI assistant ↴</div>
+    <button class="chat-trigger-button" id="open-vapi">
+      <!-- Example icon — feel free to replace with an SVG or emoji -->
+      💬
+    </button>
+  </div>
+
+  <!-- Vapi Widget embed (initially hidden / inactive) -->
   <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
           async type="text/javascript"></script>
 
   <vapi-widget
-    public-key="9f353564-13fb-4a0c-808e-fff672100bc1"
-    assistant-id="c2df5381-4a64-49ad-8c2b-f0bc3cc402f7"
+    public-key="your-public-key"
+    assistant-id="your-assistant-id"
     mode="chat"
     theme="dark"
     size="full"
@@ -97,12 +83,23 @@
     accent-color="#3B82F6"
     button-base-color="#000000"
     button-accent-color="#FFFFFF"
+    style="display: none;"
+    id="vapi-widget"
   ></vapi-widget>
-</div>
 
-<footer>
-  Powered by Vapi AI • Beautifully integrated into the website
-</footer>
+  <script>
+    const trigger = document.getElementById('open-vapi');
+    const widget = document.getElementById('vapi-widget');
+
+    trigger.addEventListener('click', () => {
+      // Toggle widget visibility on click
+      if (widget.style.display === 'none') {
+        widget.style.display = 'block';
+      } else {
+        widget.style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
 </html>
